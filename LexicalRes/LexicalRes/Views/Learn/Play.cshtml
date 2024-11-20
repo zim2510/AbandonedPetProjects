@@ -1,0 +1,57 @@
+﻿@model WordListDetailedViewModel
+
+@{
+    ViewData["Title"] = "Play";
+    var wordCount = Model.WordCount;
+    var learnedCount = Model.LearnedCount;
+    var words = Model.Words.Select(x => new { x.Id, x.Value });
+}
+
+<div class="h-100 w-100 d-flex flex-column align-items-center">
+    <div class="w-100">
+        <h3 class="card-subtitle my-4 mr-5 text-muted text-right">
+            <i class="fas fa-bullseye"></i>&nbsp;<span id="learnedCount">@learnedCount</span>/@wordCount
+        </h3>
+    </div>
+
+    <h3 id="word" class="display-3" style="color: #47525E">Congratulations!</h3>
+
+    <div id="wordCardPlaceholder" class="w-100 d-flex flex-column justify-content-center align-items-center">
+    </div>
+
+    <div class="w-50 decision-btn-row">
+        <button class="btn-decision btn-no"><i class="fas fa-times-circle text-danger"></i></button>
+        <button class="btn-decision btn-yes"><i class="fas fa-check-circle text-info"></i></button>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        let words = [];
+        let learnedWordCount = 0;
+        let wordCount = 0;
+        let curWordId = 0;
+
+        $(document).ready(function () {
+            words = @Json.Serialize(words);
+            learnedWordCount = @Json.Serialize(learnedCount);
+            wordCount = @Json.Serialize(wordCount);
+            renderWord();
+
+            $('.decision-btn-row').hide();
+
+            $('.btn-yes').click((e) => {
+                updateScore(1);
+                renderWord();
+                $('.decision-btn-row').hide();
+            });
+
+            $('.btn-no').click((e) => {
+                updateScore(-1);
+                renderWord();
+                $('.decision-btn-row').hide();
+            });
+        });
+    </script>
+    <script src="~/js/play.js"></script>
+}

@@ -1,0 +1,53 @@
+﻿.cell {
+    height: 75px;
+    font-size: calc(max(1.1vw, 16px));
+    color: black;
+    margin-bottom: 5px;
+    padding-right: 15px;
+    padding-left: 25px;
+    box-sizing: content-box;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    min-width: 550px;
+    box-shadow: 4px 4px 10px #ccc;
+    border: 1px solid #ccc;
+}
+
+body,.mynav {
+    min-width: 700px;
+}
+
+.nav-right{
+    display: flex;
+}
+
+.cell:hover {
+    box-shadow: 4px 4px 10px #0094ff;
+}
+
+.cell-link {
+    font-size: calc(max(1.1vw, 16px));
+    color: black;
+    text-decoration: none;
+}
+
+.cell-link:link {
+    text-decoration: none;
+}
+
+.page-title-top {
+    margin: auto auto;
+    width: 100%;
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.short-stat {
+    display: flex;
+    justify-content: space-between;
+}
+
+.short-stat-text {
+    font-weight: bold;
+}

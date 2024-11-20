@@ -1,0 +1,35 @@
+﻿@model Core.Models.User
+
+@{
+    ViewData["Title"] = "Signup";
+}
+
+<div class="container-login">
+    <img class="logo-page" src="~/icons/logo.svg" />
+    <form asp-action="Signup" method="post">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group">
+            <input asp-for="Name" placeholder="Name" class="form-control input-signup-login" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <input asp-for="UserId" placeholder="Username" class="form-control input-signup-login" />
+            <span asp-validation-for="UserId" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <input asp-for="Password" placeholder="Password" class="form-control input-signup-login" />
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <input type="submit" value="Signup" class="btn btn-primary" />
+            <a class="btn btn-info" asp-action="Login">I have an ID already</a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

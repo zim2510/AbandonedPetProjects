@@ -1,0 +1,34 @@
+﻿@model RegisterViewModel
+@{
+    ViewData["Title"] = "Register";
+}
+
+<link rel="stylesheet" href="~/css/registerLogin.css" />
+
+<div class="login-form">
+    <form asp-action="Register" method="post">
+        <div class="logo-container d-flex justify-content-center align-items-center">
+            <div class="text-center mt-4">
+                <span class="logo"><i class="pt-2 fas fa-spider"></i></span><br />
+                <span class="display-4">Word Spider</span>
+            </div>
+        </div>
+        <div class="content">
+            <div class="input-field">
+                <input asp-for="UserName" placeholder="Username">
+            </div>
+            <div class="input-field">
+                <input asp-for="FullName" placeholder="Full Name">
+            </div>
+            <div class="input-field">
+                <input asp-for="Email" type="email" placeholder="Email">
+            </div>
+            <div class="input-field">
+                <input asp-for="Password" type="password" placeholder="Password">
+            </div>
+        </div>
+        <div class="action">
+            <button type="submit">Register</button>
+        </div>
+    </form>
+</div>

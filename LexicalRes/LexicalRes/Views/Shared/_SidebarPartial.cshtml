@@ -1,0 +1,34 @@
+﻿<nav class="navbar bg-custom sidebar">
+    <div class="sidebar-sticky">
+        <ul class="nav flex-column">
+            <li class="nav-item">
+                <a class="nav-link" href="/Learn">
+                    <i class="nav-icon fas fa-chalkboard-teacher"></i>Learn
+                </a>
+            </li>
+
+            <li class="nav-item-group">
+                @*<span class="nav-link">
+                        #
+                    </span>*@
+                <div>
+                    <a class="nav-link" data-toggle="collapse"
+                       href="#collapse"
+                       role="button"
+                       aria-expanded="false"
+                       aria-controls="collapse">
+                        <i class="nav-icon fas fa-tools"></i>Table Management
+                    </a>
+                    <div class="collapse border-left border-info ml-5" id="collapse">
+                        <a class="nav-link" href="/TableManagement/Words">
+                            <i class="nav-icon fas fa-sign-language"></i>Words
+                        </a>
+                        <a class="nav-link" href="/TableManagement/WordLists">
+                            <i class="nav-icon fas fa-clipboard-list"></i>Word Lists
+                        </a>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</nav>

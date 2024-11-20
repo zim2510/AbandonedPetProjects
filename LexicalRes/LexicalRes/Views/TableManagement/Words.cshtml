@@ -1,0 +1,97 @@
+﻿@model WordGridModel[]
+
+@{
+    ViewData["Title"] = "Words";
+    var commands = new List<object> {
+        new { type = "Edit", buttonOption = new { iconCss = "e-icons e-edit", cssClass = "e-primary e-flat" } },
+        new { type = "Delete", buttonOption = new { iconCss = "e-icons e-delete", cssClass = "e-flat" } },
+        new { type = "Save", buttonOption = new { iconCss = "e-icons e-update", cssClass = "e-primary e-flat" } },
+        new { type = "Cancel", buttonOption = new { iconCss = "e-icons e-cancel-icon", cssClass = "e-flat" } }
+    };
+
+    var valueAccessor = "valueAccessorFn";
+}
+
+
+<div class="d-flex flex-row w-100 justify-content-around mb-3">
+    <div class="d-flex flex-column align-items-center mr-1">
+        <p class="h5">Words</p>
+        <ejs-grid id="WordsGrid"
+                  allowSorting="true"
+                  dataBound="gridDataBound"
+                  allowFiltering="true"
+                  allowPaging="true"
+                  toolbar="@(new List<string>() { "Add", "Search" })">
+            <e-data-manager json="@Model"
+                            adaptor="RemoteSaveAdaptor"
+                            insertUrl="/TableManagement/InsertWord"
+                            updateUrl="/TableManagement/UpdateWord"
+                            removeUrl="/TableManagement/DeleteWord">
+            </e-data-manager>
+            <e-grid-filtersettings mode="Immediate"
+                                   immediateModeDelay="500">
+            </e-grid-filtersettings>
+            <e-grid-editSettings allowAdding="true"
+                                 allowEditing="true"
+                                 allowDeleting="true"
+                                 showDeleteConfirmDialog="true"
+                                 mode="Dialog">
+            </e-grid-editSettings>
+            <e-grid-columns>
+                <e-grid-column field="Id" isPrimaryKey="true" visible="false"></e-grid-column>
+                <e-grid-column field="Value" headerText="Word" validationRules="@(new { required = true})" clipMode="EllipsisWithTooltip"></e-grid-column>
+                <e-grid-column field="WordListIds"
+                               headerText="Word Lists"
+                               valueAccessor="valueAccessor"
+                               clipMode="EllipsisWithTooltip"
+                               edit="@(new {create = "create", read = "read", destroy = "destroy", write = "write"})">
+                </e-grid-column>
+                <e-grid-column width="120" commands=@commands></e-grid-column>
+            </e-grid-columns>
+        </ejs-grid>
+    </div>
+</div>
+
+<script>
+    function gridDataBound(args) {
+        var gridObj = document.getElementById('WordsGrid')['ej2_instances'][0];
+        Object.assign(gridObj.filterModule.filterOperators, { startsWith: 'contains' });
+    }
+
+    const wordLists = @Json.Serialize(ViewBag.WordLists);
+
+    function valueAccessorFn(field, data, column) {
+        let wordListNames = [];
+
+        data.WordListIds.forEach(wordListId => {
+            let wordList = wordLists.find(list => list.id == wordListId);
+            wordListNames.push(wordList.name);
+        })
+
+        return wordListNames.join(", ");
+    }
+
+    function create(args) {
+        elem = document.createElement('input');
+        return elem;
+    }
+
+    function write(args) {
+        multiselect = new ej.dropdowns.MultiSelect({
+            dataSource: wordLists,
+            placeholder: "Select Word Lists",
+            value: args.rowData[args.column.field],
+            fields: { text: 'name', value: 'id' },
+            mode: 'CheckBox'
+        });
+        multiselect.appendTo(elem);
+    }
+
+    function read(args) {
+        return multiselect.value
+    }
+
+    function destroy() {
+        multiselect.destroy();
+    }
+</script>

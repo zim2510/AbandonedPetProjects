@@ -1,0 +1,59 @@
+﻿@model Problem[]
+
+@{
+    ViewData["Title"] = "Problems";
+}
+
+<ejs-grid id="ProblemsGrid"
+          allowPaging="true"
+          toolbar="@(new List<string>() { "Add", "Delete", "Update", "Cancel", "Search" })">
+    <e-data-manager json="@Model"
+                    adaptor="RemoteSaveAdaptor"
+                    insertUrl="/Problems/Insert"
+                    updateUrl="/Problems/Update"
+                    removeUrl="/Problems/Delete">
+    </e-data-manager>
+    <e-grid-pagesettings pageSize="100"></e-grid-pagesettings>
+    <e-grid-editSettings allowDeleting="true"
+                         allowEditing="true"
+                         allowAdding="true"
+                         showDeleteConfirmDialog="true">
+    </e-grid-editSettings>
+    <e-grid-columns>
+        <e-grid-column field="ProblemId" isPrimaryKey="true" visible="false"></e-grid-column>
+        <e-grid-column field="Name" headerText="Name"></e-grid-column>
+        <e-grid-column field="Link" headerText="Link"></e-grid-column>
+        @*<e-grid-column field="ProblemTags" headerText="Tags" edit="@(new {create = "create", read = "read", destroy = "destroy", write = "write"})"></e-grid-column>*@
+    </e-grid-columns>
+</ejs-grid>
+
+@section Scripts{
+    <script>
+        var elem;
+        var mObj;
+
+        function create(args) {
+            elem = document.createElement('input');
+            return elem;
+        }
+
+        function write(args) {
+            let tags = args.rowData.ProblemTags;
+            multiselect = new ej.dropdowns.Multiselect({
+                dataSource: tagsData,
+                value: tagsData,
+                fields: { value: '', text: 'Id' }
+            });
+
+            mObj.appendTo(elem);
+        }
+
+        function destroy() {
+            mObj.destroy();
+        }
+
+        function read(args) {
+            return null;
+        }
+    </script>
+}

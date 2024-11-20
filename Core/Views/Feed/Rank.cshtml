@@ -1,0 +1,17 @@
+﻿@model IEnumerable<RankViewModel>
+
+@{
+    ViewData["Title"] = "Rank";
+    ViewData["Username"] = ViewBag.Username;
+}
+
+<div class="container">
+    <ejs-grid id="standings" dataSource="Model" allowPaging="true">
+        <e-grid-pagesettings pageSize="50"></e-grid-pagesettings>
+        <e-grid-columns>
+            <e-grid-column field="UserId" headerText="Handle"></e-grid-column>
+            <e-grid-column field="Name" headerText="Name"></e-grid-column>
+            <e-grid-column field="SolveCount" headerText="Solves"></e-grid-column>
+        </e-grid-columns>
+    </ejs-grid>
+</div>

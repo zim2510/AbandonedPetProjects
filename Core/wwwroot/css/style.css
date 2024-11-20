@@ -1,0 +1,42 @@
+﻿.container-login {
+    height: 90vh;
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+}
+
+.container-details {
+    height: 200px;
+    background-color: #ccc;
+    font-weight: bold;
+}
+
+.input-signup-login {
+    width: 100%;
+    height: auto;
+}
+
+.logo-page{
+    width: 150px;
+    height: auto;
+    margin-bottom: 30px;
+}
+
+.home-content{
+    font-size: 25px;
+    width: 90%;
+    max-width: 500px;
+    margin-bottom: 25px;
+}
+
+.container-home {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    width: 100%;
+}

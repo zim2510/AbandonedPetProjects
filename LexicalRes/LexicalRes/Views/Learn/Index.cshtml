@@ -1,0 +1,38 @@
+﻿@model LearnViewModel
+@{
+    ViewData["Title"] = "Learn";
+}
+
+<div class="d-flex flex-wrap">
+    @foreach (var wordList in Model.PredefinedLists)
+    {
+        <div class="card word-list">
+            <div class="card-body">
+                <h5 class="card-title">@wordList.Name</h5>
+                <h6 class="card-subtitle mb-2 text-muted"><i class="fas fa-bullseye"></i>&nbsp;@wordList.LearnedCount/@wordList.Count</h6>
+                <a href="/Play?wordListId=@wordList.Id" class="card-link">Practice List</a>
+            </div>
+        </div>
+    }
+</div>
+
+<hr />
+
+<div class="d-flex flex-wrap">
+    <div class="card word-list">
+        <div class="card-body">
+            <h5 class="card-title">Learning</h5>
+            <h6 class="card-subtitle mb-2 text-muted"><i class="fas fa-bullseye"></i>&nbsp;@Model.LearningCount</h6>
+            <a href="/Learn/Learning" class="card-link">Practice List</a>
+        </div>
+    </div>
+
+    <div class="card word-list">
+        <div class="card-body">
+            <h5 class="card-title">Learned</h5>
+            <h6 class="card-subtitle mb-2 text-muted"><i class="fas fa-bullseye"></i>&nbsp;@Model.LearnedCount</h6>
+            <a href="/Learn/Learned" class="card-link">Practice List</a>
+        </div>
+    </div>
+</div>
+

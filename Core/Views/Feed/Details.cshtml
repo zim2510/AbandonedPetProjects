@@ -1,0 +1,25 @@
+﻿@model Core.Models.Problem
+
+@{
+    ViewData["Title"] = "Details";
+    ViewData["Username"] = ViewBag.Username;
+}
+
+<div class="container-details container-home">
+    <div>
+        <div>
+            <text>@Model.Name</text>
+        </div>
+        <div>
+            @Html.DisplayFor(model=>model.Link)
+        </div>
+        <div>
+            <label>Solved by</label>
+            <text>@ViewData["SolveCount"] users</text>
+        </div>
+        <div>
+            <a asp-action="Index">Back to List</a>
+        </div>
+    </div>
+</div>
+

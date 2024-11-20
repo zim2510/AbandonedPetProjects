@@ -1,0 +1,86 @@
+﻿@model FeedViewModel
+
+@{
+    ViewData["Title"] = "Feed";
+    ViewData["Username"] = ViewBag.Username;
+}
+
+<div class="container">
+    @*<h1 class="page-title-top">Hello, @Model.Name</h1>*@
+
+    <div class="short-stat">
+        <div><span class="short-stat-text">Total Solved: </span><span id="solvedCountSpan">@Model.SolvedCount</span></div>
+        <span class="short-stat-text">Rank: @Model.Rank</span>
+    </div>
+
+    <hr />
+    <ejs-grid id="problemsGrid"
+              dataSource="Model.Problems"
+              allowPaging="true"
+              queryCellInfo="queryCellInfo"
+              toolbar="@(new List<string>() { "Search" })">
+        <e-grid-pagesettings pageSize="50">
+        </e-grid-pagesettings>
+        <e-grid-columns>
+            <e-grid-column field="Name" allowSearching="true" headerText="Title" template="#nameTemplate" width="70%"></e-grid-column>
+            <e-grid-column field="ProblemId" headerText="Details" template="#detailsTemplate"></e-grid-column>
+            <e-grid-column field="IsSolved" template="#isSolvedTemplate"></e-grid-column>
+        </e-grid-columns>
+    </ejs-grid>
+</div>
+
+@section Scripts{
+    <script id="nameTemplate" type="text/x-template">
+        <a href="${Link}" target="_blank">${Name}</a>
+    </script>
+
+    <script id="detailsTemplate" type="text/x-template">
+        <a class="btn btn-sm btn-outline-secondary" href="/Feed/Details/${ProblemId}">Details</a>
+    </script>
+
+    <script id="isSolvedTemplate" type="text/x-template">
+        <input class="switch">
+    </script>
+
+    <script>
+
+        let changeSolvedCount = (flag) => {
+            let solvedCountElem = document.querySelector("#solvedCountSpan");
+            let solvedCount = Number.parseInt(solvedCountElem.textContent);
+            solvedCount += flag ? 1 : -1;
+            solvedCountElem.textContent = solvedCount;
+            if (solvedCount / @Model.Problems.Count >= 0.7) {
+                setTimeout(() => location.reload(), 500);
+            }
+        }
+
+        let submitToServer = async (switchComp, problemId) => {
+            changeSolvedCount(switchComp.checked);
+            let formData = new FormData();
+
+            formData.set("UserId", "@(Model.UserId)");
+            formData.set("ProblemId", problemId);
+            formData.set("IsSolved", switchComp.checked);
+
+            let response = await fetch("/Feed/ChangeSolveStatus", {
+                method: "POST",
+                body: formData
+            });
+
+            if (!response.ok) {
+                changeSolvedCount(!switchComp.checked);
+                switchComp.checked = !switchComp.checked;
+            }
+        }
+
+        function queryCellInfo(args) {
+            var targEle1 = args.cell.querySelector('.switch');
+            var switchComp = new ej.buttons.Switch({ checked: args.data[args.column.field] });
+            switchComp.appendTo(targEle1);
+            switchComp.addEventListener("change", (e) => {
+                submitToServer(switchComp, args.data["ProblemId"]);
+            });
+        }
+
+    </script>
+}
